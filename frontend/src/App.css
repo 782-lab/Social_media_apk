@@ -1,0 +1,11 @@
+/* frontend/src/App.css */
+
+/* Yeh poori app par apply hoga */
+.app-container {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px 0; /* Thoda padding taaki content chipke nahi */
+}
