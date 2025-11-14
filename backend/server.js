@@ -3,19 +3,18 @@
 const express = require('express');
 const dotenv = require('dotenv');
 const mongoose = require('mongoose');
+const cors = require('cors'); // <-- 1. YEH NAYI LINE ADD HUI HAI
 
 // Dono routes ko import karna
 const userRoutes = require('./routes/userRoutes');
-const postRoutes = require('./routes/postRoutes'); // <-- Naya Post Route import
+const postRoutes = require('./routes/postRoutes'); 
 
-// Dotenv ko configure karna
 dotenv.config();
 
 // ---- Database Connection Function ----
 const connectDB = async () => {
   try {
     const conn = await mongoose.connect(process.env.MONGO_URI);
-    // Connection message ko yahan move kar diya
     console.log(`MongoDB Connected: ${conn.connection.host}`);
   } catch (error) {
     console.error(`Error: ${error.message}`);
@@ -23,31 +22,29 @@ const connectDB = async () => {
   }
 };
 
-// Database se connect karna
 connectDB();
 // ------------------------------------
 
 const app = express();
 
+// --- YEH NAYI LINES ADD HUI HAIN ---
+// CORS ko istemal karna (taaki frontend se request aa sake)
+app.use(cors()); 
+// ---------------------------------
+
 // JSON data ko samajhne ke liye middleware
 app.use(express.json());
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5000; // Render PORT ko automatically handle karega
 
 app.get('/', (req, res) => {
   res.send('Social Media API is running...');
 });
 
 // --- API Routes ---
-
-// User routes ko use karna
 app.use('/api/users', userRoutes);
-
-// --- YEH NAYI LINE ADD HUI HAI ---
-// Jab bhi koi /api/posts par aaye, toh postRoutes file check karo
 app.use('/api/posts', postRoutes);
-// ---------------------------------
 
 app.listen(PORT, () => {
-  console.log(`Server http://localhost:${PORT} par start ho gaya hai`);
+  console.log(`Server http://localhost:${PORT}  start on port`);
 });
