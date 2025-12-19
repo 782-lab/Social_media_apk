@@ -1,4 +1,4 @@
- good  ma# Social Media App Enhancements - HomePage Component
+ good  my Social Media App Enhancements - HomePage Component
 
 ## Completed Enhancements
 
